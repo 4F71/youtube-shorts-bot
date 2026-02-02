@@ -1,0 +1,28 @@
+# Mevcut Paketler
+requests>=2.31.0
+pyyaml>=6.0
+Pillow>=10.0.0
+fastapi>=0.109.0
+uvicorn>=0.27.0
+google-auth>=2.25.0
+google-auth-oauthlib>=1.2.0
+google-api-python-client>=2.140.0
+
+# Yeni Paketler - Web Scraping
+selenium>=4.15.0
+beautifulsoup4>=4.12.0
+webdriver-manager>=4.0.0
+
+# Video İşleme
+yt-dlp>=2023.11.0
+opencv-python>=4.8.0
+ffmpeg-python>=0.2.0
+
+# AI & TTS
+groq>=0.4.0
+elevenlabs>=0.2.0
+
+# Utilities
+python-dotenv>=1.0.0
+colorama>=0.4.6
+tqdm>=4.66.0

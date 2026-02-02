@@ -1,0 +1,70 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+
+# Secrets
+.env
+client_secret.json
+.env
+*.env
+!.env.example
+
+
+# Outputs
+output/
+!output/.gitkeep
+bot.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+
+#kişisel
+.cursorrules
+MVP_README.md
+n8n_workflow.json
+.env.example
+output/
+assets/
+downloads/*
+!downloads/.gitkeep
+audio/*
+!audio/.gitkeep
+ready/*
+!ready/.gitkeep
+approved/*
+!approved/.gitkeep
+uploaded/*
+!uploaded/.gitkeep
+rejected/*
+!rejected/.gitkeep
+scripts/drafts/*
+!scripts/drafts/.gitkeep
+scripts/finals/*
+!scripts/finals/.gitkeep
+modules_old/
+
+
+# Logs
+logs/
+*.log
+
+
+# Temp Files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db

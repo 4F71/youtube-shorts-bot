@@ -1,0 +1,63 @@
+# YouTube Shorts Viral Video Transformation Bot - Configuration
+
+# API Keys (env'den okunacak)
+api_keys:
+  groq: "${GROQ_API_KEY}"
+  elevenlabs: "${ELEVENLABS_API_KEY}"
+  elevenlabs_voice_id: "${ELEVENLABS_VOICE_ID}"
+  youtube_client_id: "${YOUTUBE_CLIENT_ID}"
+  youtube_client_secret: "${YOUTUBE_CLIENT_SECRET}"
+
+# Scraping Ayarları
+scraping:
+  platforms:
+    - instagram
+    - tiktok
+    - facebook
+  min_views: 1000000
+  max_videos_per_platform: 10
+  rate_limit_seconds: 2
+  user_agents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
+# Video Filtreleme
+video:
+  max_duration: 60
+  min_duration: 15
+  target_resolution: "1080x1920"  # Vertical (9:16)
+  target_fps: 30
+  skip_if_face_detected: true
+  skip_if_logo_detected: true
+
+# Subtitle Stil (MrBeast Style)
+subtitle:
+  style: "mrbeast"
+  font: "Impact"
+  font_size: 72
+  color: "white"
+  outline_color: "yellow"
+  outline_width: 5
+  position: "center"
+  background_opacity: 0.5
+  word_by_word: true
+
+# Audio Ayarları
+audio:
+  default_mode: "ai"  # "ai" veya "manual"
+  tts_language: "tr"
+  tts_model: "eleven_multilingual_v2"
+
+# AI Script Ayarları
+ai:
+  model: "llama-3.3-70b-versatile"
+  temperature: 0.7
+  max_tokens: 500
+
+# Pipeline Ayarları
+pipeline:
+  max_retries: 3
+  retry_delay_seconds: 5
+  cleanup_temp: false  # Debug için false
+  save_scripts: true
