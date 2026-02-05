@@ -11,6 +11,8 @@ import os
 import logging
 import yaml
 import subprocess
+import json
+from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -102,6 +104,35 @@ def check_ffmpeg() -> bool:
 
 
 # ═══════════════════════════════════════════════════════════
+
+
+# Save selected videos to JSON
+def save_selected_videos(selected_videos: list, platform_type: str) -> Path:
+    """
+    Save selected videos to a timestamped JSON file.
+
+    Args:
+        selected_videos: List of selected video dictionaries
+        platform_type: Platform type label (e.g., Instagram Reels)
+
+    Returns:
+        Path to the saved JSON file
+    """
+    timestamp_key = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    filename_ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    key = f"{platform_type.upper()} - {timestamp_key}"
+
+    output_dir = Path(__file__).parent / "scripts" / "selected"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / f"selected_videos_{filename_ts}.json"
+
+    data = {key: selected_videos}
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    logger.info(f"Selected videos saved: {output_path}")
+    return output_path
+
 # MAIN FUNCTION (MVP)
 # ═══════════════════════════════════════════════════════════
 def main():
@@ -158,6 +189,20 @@ def main():
         logger.warning("⚠️ No videos selected, exiting...")
         return
     
+    # Save selected videos to JSON
+    platform_types = {v.get('platform', '') for v in selected}
+    if len(platform_types) == 1:
+        platform = next(iter(platform_types))
+        platform_map = {
+            "instagram": "Instagram Reels",
+            "tiktok": "TikTok Trending",
+            "facebook": "Facebook Watch",
+        }
+        platform_type = platform_map.get(platform, platform or "Unknown Platform")
+    else:
+        platform_type = "Multi Platform"
+    save_selected_videos(selected, platform_type)
+
     # ─── RESULTS ───────────────────────────────────────────
     print("\n" + "="*80)
     print(f" ✅ MVP TAMAMLANDI - {len(selected)} video seçildi")
