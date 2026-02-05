@@ -20,9 +20,12 @@ ffmpeg-python>=0.2.0
 
 # AI & TTS
 groq>=0.4.0
-elevenlabs>=0.2.0
+elevenlabs>=1.0.0
 
 # Utilities
 python-dotenv>=1.0.0
 colorama>=0.4.6
 tqdm>=4.66.0
+sounddevice>=0.4.6
+soundfile>=0.12.1
+pynput>=1.7.6
