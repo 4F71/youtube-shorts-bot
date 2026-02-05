@@ -53,7 +53,9 @@ audio:
 ai:
   model: "llama-3.3-70b-versatile"
   temperature: 0.7
-  max_tokens: 500
+  max_tokens: 1000
+  retry_count: 3
+  retry_delay: 2
 
 # Pipeline Ayarları
 pipeline:
