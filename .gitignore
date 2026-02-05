@@ -56,7 +56,7 @@ scripts/drafts/*
 scripts/finals/*
 !scripts/finals/.gitkeep
 modules_old/
-
+*.json
 
 # Logs
 logs/
