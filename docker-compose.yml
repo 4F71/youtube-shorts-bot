@@ -1,0 +1,69 @@
+# ============================================================
+# docker-compose.yml
+# Services:
+#   - n8n        : Scheduler / orchestrator (UI: localhost:5678)
+#   - youtube-bot: Python pipeline (API: localhost:8000)
+#
+# Setup:
+#   1. cp .env.example .env
+#   2. .env dosyasında API keylerini doldur
+#   3. docker compose up -d
+#   4. n8n UI → localhost:5678 → workflow import → n8n_workflow.json
+# ============================================================
+
+version: "3.8"
+
+services:
+  # ─── n8n Scheduler ──────────────────────────────────────
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - GENERIC_TIMEZONE=Europe/Istanbul
+      - TZ=Europe/Istanbul
+      # n8n env vars (Telegram, ElevenLabs keys for workflow)
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    depends_on:
+      - youtube-bot
+    networks:
+      - bot-network
+    restart: unless-stopped
+
+  # ─── YouTube Shorts Bot ─────────────────────────────────
+  youtube-bot:
+    build: .
+    container_name: youtube-bot
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./output:/app/output                  # Pipeline outputs
+      - ./assets:/app/assets                  # Music assets
+      - ./client_secret.json:/app/client_secret.json  # YouTube OAuth
+      - ./youtube_credentials.pickle:/app/youtube_credentials.pickle  # Cached auth
+    environment:
+      - CONFIG_PATH=config/config.yaml
+      # API Keys (config.yaml'dan env var resolve eder)
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - ELEVENLABS_VOICE_ID=${ELEVENLABS_VOICE_ID}
+      - PEXELS_API_KEY=${PEXELS_API_KEY}
+      - YOUTUBE_CLIENT_ID=${YOUTUBE_CLIENT_ID}
+      - YOUTUBE_CLIENT_SECRET=${YOUTUBE_CLIENT_SECRET}
+    networks:
+      - bot-network
+    restart: unless-stopped
+
+# ─── Volumes ──────────────────────────────────────────────
+volumes:
+  n8n_data:
+
+# ─── Network ──────────────────────────────────────────────
+networks:
+  bot-network:
+    driver: bridge
