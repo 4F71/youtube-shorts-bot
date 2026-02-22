@@ -1,0 +1,102 @@
+# YouTube Shorts Viral Video Transformation Bot - Configuration
+
+# API Keys (env'den okunacak)
+api_keys:
+  groq: "${GROQ_API_KEY}"
+  elevenlabs: "${ELEVENLABS_API_KEY}"
+  elevenlabs_voice_id: "${ELEVENLABS_VOICE_ID}"
+  youtube_client_id: "${YOUTUBE_CLIENT_ID}"
+  youtube_client_secret: "${YOUTUBE_CLIENT_SECRET}"
+
+# Scraping Ayarları
+scraping:
+  platforms:
+    - instagram
+    - tiktok
+    - facebook
+  min_views: 1000000
+  max_videos_per_platform: 10
+  rate_limit_seconds: 2
+  user_agents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
+# Scraper Settings
+scraper:
+  strategy: "hybrid"  # "instaloader", "selenium", "hybrid"
+  use_proxy: false  # Free proxy kullan (ücretsiz, güvenilirlik düşük)
+  use_instaloader: true  # Hibrit strateji için true (hızlı API + Selenium fallback)
+  chrome_profile: null
+  max_scrolls: 10  # Artırıldı: 5 → 10 (daha fazla video bul)
+  min_views: 50000  # Düşürüldü: 100k → 50k (daha fazla video kabul et)
+  timeout: 15  # Artırıldı: 10 → 15 saniye (yavaş bağlantılar için)
+  headless: false  # Bot detection'ı zorlaştırmak için GUI modunda çalış
+  only_reels: true  # Sadece reels, post'ları atla
+
+
+# Video Filtreleme
+video:
+  max_duration: 60
+  min_duration: 15
+  target_resolution: "1080x1920"  # Vertical (9:16)
+  target_fps: 30
+  skip_if_face_detected: true
+  skip_if_logo_detected: true
+
+# Subtitle Stil (MrBeast Style)
+subtitle:
+  style: "mrbeast"
+  font: "Impact"
+  font_size: 20  # FFmpeg SRT scaling: 20 × (video_h/288) ≈ 89px on 1280p (~7% of height)
+  color: "white"
+  outline_color: "yellow"
+  outline_width: 3
+  position: "center"
+  background_opacity: 0.5
+  word_by_word: true
+
+# Audio Ayarları
+audio:
+  default_mode: "ai"  # "ai" veya "manual"
+  tts_language: "tr"
+  tts_model: "eleven_multilingual_v2"
+  sample_rate: 44100
+
+# AI Script Ayarları
+ai:
+  model: "llama-3.3-70b-versatile"
+  temperature: 0.7
+  max_tokens: 1000
+  retry_count: 3
+  retry_delay: 2
+
+# Performans Ayarları (PHASE 2 için hazır)
+performance:
+  max_concurrent_downloads: 3  # Paralel indirme (Phase 2'de aktif olacak)
+  max_concurrent_api_calls: 2  # Groq/ElevenLabs için
+  pipeline_timeout_minutes: 60  # Toplam pipeline timeout
+
+# Cache Ayarları (PHASE 2 için hazır)
+cache:
+  enabled: true  # Video deduplication
+  ttl_hours: 24  # 24 saat cache tutma
+  cache_dir: "./cache"
+
+# Disk Yönetimi (PHASE 4 için hazır)
+disk:
+  max_usage_gb: 100  # Maksimum 100GB kullan
+  auto_cleanup: true  # Otomatik eski dosya temizleme
+
+# Logging Ayarları (PHASE 4 için hazır)
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING
+  structured: true  # JSON format metrics
+  metrics_enabled: true  # Performance tracking
+
+# Pipeline Ayarları
+pipeline:
+  max_retries: 3
+  retry_delay_seconds: 5
+  cleanup_temp: false  # Debug için false
+  save_scripts: true

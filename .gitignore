@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Secrets & credentials
+.env
+*.env
+client_secret.json
+www.instagram.com_cookies.txt
+*.cookies.txt
+
+# Outputs & work directories
+output/
+!output/.gitkeep
+downloads/*
+!downloads/.gitkeep
+audio/*
+!audio/.gitkeep
+ready/*
+!ready/.gitkeep
+approved/*
+!approved/.gitkeep
+uploaded/*
+!uploaded/.gitkeep
+rejected/*
+!rejected/.gitkeep
+scripts/drafts/*
+!scripts/drafts/.gitkeep
+scripts/finals/*
+!scripts/finals/.gitkeep
+scripts/selected/
+temp/
+cache/
+
+# Logs
+logs/
+*.log
+bot.log
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Claude Code metadata
+.claude/
+CLAUDE.md
+
+# Test files
+test_*.py
+scripts/test_*.py
+nul
+
+# Kişisel / eski
+.cursorrules
+MVP_README.md
+n8n_workflow.json
+assets/
+modules_old/
+.chrome_profile
+*debug
+
+# Temp files
+*.tmp
+*.temp
